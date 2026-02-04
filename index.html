@@ -66,27 +66,48 @@ button{
     <h1>Will you be my Valentine?</h1>
 
     <button id="yes" onclick="yesClick()">yes ❤️❤️</button>
-    <button id="no" onmouseover="moveNo()">No 😅</button>
-
+   <button id="no" onclick="moveNo()">No 😅</button>
     <div id="result"></div>
 </div>
 
 <script>
+let noTexts = [
+    "Are you sure? 😏",
+    "Really sure? 🤔",
+    "Think again 😜",
+    "Last chance 😅",
+    "You can’t say no 😈"
+];
+let noClickCount = 0;
+
 function yesClick(){
     document.getElementById("result").innerHTML = `
         <h2>Yayyy! 💖</h2>
         <p>You just made my day 🥰</p>
-        <img src="https://i.imgur.com/0XKzn9M.gif">
+        <img src="love.gif">
     `;
 }
 
 function moveNo(){
+    let noBtn = document.getElementById("no");
+
+    // change text
+    if(noClickCount < noTexts.length){
+        noBtn.innerText = noTexts[noClickCount];
+    }
+
+    noClickCount++;
+
+    // move button
     let x = Math.random() * (window.innerWidth - 120);
     let y = Math.random() * (window.innerHeight - 60);
-    document.getElementById("no").style.left = x + "px";
-    document.getElementById("no").style.top = y + "px";
+
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
 }
 </script>
 
+
 </body>
 </html>
+
