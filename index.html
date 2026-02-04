@@ -36,6 +36,7 @@ button{
     border-radius:30px;
     cursor:pointer;
     margin:15px;
+    <audio id="noSound" src="click.mp3"></audio>
 }
 
 #yes{
@@ -56,14 +57,40 @@ button{
     width:180px;
     border-radius:15px;
     margin-top:15px;
+}@keyframes shake {
+  0% { transform: translate(0); }
+  20% { transform: translate(-5px, 5px); }
+  40% { transform: translate(5px, -5px); }
+  60% { transform: translate(-5px, -5px); }
+  80% { transform: translate(5px, 5px); }
+  100% { transform: translate(0); }
 }
+
+.shake {
+  animation: shake 0.4s;
+}
+
+.confetti {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  background: red;
+  animation: fall 2s linear infinite;
+}
+
+@keyframes fall {
+  0% { top: -10px; opacity: 1; }
+  100% { top: 100vh; opacity: 0; }
+}
+
 </style>
 </head>
 
 <body>
 
 <div class="card">
-    <h1>Will you be my Valentine?</h1>
+   <h1>Bhakti 💖</h1>
+<p>Will you be my Valentine?</p>
 
     <button id="yes" onclick="yesClick()">yes ❤️❤️</button>
    <button id="no" onclick="moveNo()">No 😅</button>
@@ -110,4 +137,5 @@ function moveNo(){
 
 </body>
 </html>
+
 
