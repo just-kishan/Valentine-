@@ -25,9 +25,7 @@ body{
     max-width:400px;
 }
 
-h1{
-    color:#c9184a;
-}
+h1{ color:#c9184a; }
 
 button{
     padding:14px 26px;
@@ -36,7 +34,6 @@ button{
     border-radius:30px;
     cursor:pointer;
     margin:15px;
-    <audio id="noSound" src="click.mp3"></audio>
 }
 
 #yes{
@@ -49,93 +46,114 @@ button{
     position:absolute;
 }
 
-#result{
-    margin-top:25px;
-}
-
 #result img{
     width:180px;
     border-radius:15px;
     margin-top:15px;
-}@keyframes shake {
+}
+
+/* Shake */
+@keyframes shake {
   0% { transform: translate(0); }
-  20% { transform: translate(-5px, 5px); }
-  40% { transform: translate(5px, -5px); }
-  60% { transform: translate(-5px, -5px); }
-  80% { transform: translate(5px, 5px); }
+  25% { transform: translate(-5px, 5px); }
+  50% { transform: translate(5px, -5px); }
+  75% { transform: translate(-5px, -5px); }
   100% { transform: translate(0); }
 }
 
-.shake {
+.shake{
   animation: shake 0.4s;
 }
 
-.confetti {
-  position: fixed;
-  width: 10px;
-  height: 10px;
-  background: red;
+/* Confetti */
+.confetti{
+  position:fixed;
+  width:10px;
+  height:10px;
   animation: fall 2s linear infinite;
 }
 
-@keyframes fall {
-  0% { top: -10px; opacity: 1; }
-  100% { top: 100vh; opacity: 0; }
+@keyframes fall{
+  from{ top:-10px; opacity:1; }
+  to{ top:100vh; opacity:0; }
 }
-
 </style>
 </head>
 
 <body>
 
 <div class="card">
-   <h1>Bhakti 💖</h1>
-<p>Will you be my Valentine?</p>
+    <h1>Bhakti 💖</h1>
+    <p>Will you be my Valentine?</p>
 
     <button id="yes" onclick="yesClick()">yes ❤️❤️</button>
-   <button id="no" onclick="moveNo()">No 😅</button>
+    <button id="no" onclick="moveNo()">No 😅</button>
+
     <div id="result"></div>
 </div>
 
+<!-- AUDIO (CORRECT PLACE) -->
+<audio id="noSound" src="click.mp3"></audio>
+
 <script>
 let noTexts = [
-    "Are you sure? 😏",
-    "Really sure? 🤔",
-    "Think again 😜",
-    "Last chance 😅",
-    "You can’t say no 😈"
+  "Are you sure? 😏",
+  "Really sure? 🤔",
+  "Think again 😜",
+  "Still no? 😅",
+  "Come on Bhakti 😈"
 ];
+
 let noClickCount = 0;
 
 function yesClick(){
-    document.getElementById("result").innerHTML = `
-        <h2>Yayyy! 💖</h2>
-        <p>You just made my day 🥰</p>
-        <img src="love.gif">
-    `;
+  document.getElementById("result").innerHTML = `
+    <h2>Yayyy Bhakti! 💖</h2>
+    <p>You just made my day 🥰</p>
+    <img src="love.gif">
+  `;
+  startConfetti();
 }
 
 function moveNo(){
-    let noBtn = document.getElementById("no");
+  let noBtn = document.getElementById("no");
+  let sound = document.getElementById("noSound");
 
-    // change text
-    if(noClickCount < noTexts.length){
-        noBtn.innerText = noTexts[noClickCount];
-    }
+  // play sound
+  sound.currentTime = 0;
+  sound.play();
 
-    noClickCount++;
+  // shake screen
+  document.body.classList.add("shake");
+  setTimeout(()=>document.body.classList.remove("shake"),400);
 
-    // move button
-    let x = Math.random() * (window.innerWidth - 120);
-    let y = Math.random() * (window.innerHeight - 60);
+  // change text
+  noBtn.innerText = noTexts[noClickCount % noTexts.length];
+  noClickCount++;
 
-    noBtn.style.left = x + "px";
-    noBtn.style.top = y + "px";
+  // FINAL TRAP
+  if(noClickCount >= 30){
+    noBtn.style.display = "none";
+    alert("NO option removed 😆❤️");
+    return;
+  }
+
+  // move
+  noBtn.style.left = Math.random()*(window.innerWidth-120)+"px";
+  noBtn.style.top = Math.random()*(window.innerHeight-60)+"px";
+}
+
+function startConfetti(){
+  for(let i=0;i<50;i++){
+    let c = document.createElement("div");
+    c.className="confetti";
+    c.style.left=Math.random()*100+"vw";
+    c.style.background=["#ff4d6d","#ffc8dd","#ffd166"][Math.floor(Math.random()*3)];
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),3000);
+  }
 }
 </script>
 
-
 </body>
 </html>
-
-
