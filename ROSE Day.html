@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Rose Day</title>
+
+<style>
+body{
+  margin:0;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#fbc2eb,#a6c1ee);
+  font-family: 'Georgia', serif;
+  overflow:hidden;
+}
+
+.container{
+  background:white;
+  padding:35px;
+  border-radius:18px;
+  max-width:420px;
+  width:90%;
+  text-align:center;
+  box-shadow:0 15px 40px rgba(0,0,0,0.2);
+  animation: fadeIn 1.2s ease;
+}
+
+h1{
+  color:#c9184a;
+  margin-bottom:10px;
+}
+
+p{
+  font-size:17px;
+  color:#4a4a4a;
+  line-height:1.6;
+}
+
+button{
+  margin-top:20px;
+  padding:12px 26px;
+  font-size:16px;
+  border:none;
+  border-radius:25px;
+  cursor:pointer;
+  background:#ff4d6d;
+  color:white;
+}
+
+button.secondary{
+  background:#ffd6e0;
+  color:#7a102a;
+}
+
+#rose{
+  width:160px;
+  margin-top:15px;
+}
+
+.hidden{
+  display:none;
+}
+
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(20px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
+/* Confetti */
+.confetti{
+  position:fixed;
+  width:10px;
+  height:10px;
+  animation: fall 2.5s linear infinite;
+}
+
+@keyframes fall{
+  from{top:-10px; opacity:1;}
+  to{top:100vh; opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container" id="scene1">
+  <h1>🌹 Rose Day 🌹</h1>
+  <p>
+    This Rose Day,<br>
+    I have something special to share with you.
+  </p>
+  <button onclick="openLetter()">Open the letter 🌸</button>
+</div>
+
+<div class="container hidden" id="scene2">
+  <h1>Dear Bhakti 💖</h1>
+  <p>
+    Rose Day is not just about roses,<br>
+    it’s about expressing what the heart feels.<br><br>
+
+    Today, I want to give you this rose<br>
+    as a symbol of care, respect, and something truly special.<br><br>
+
+    Some feelings are simple,<br>
+    yet they mean everything. 🌹
+  </p>
+  <img id="rose" src="https://media.tenor.com/cuKLh1gaUCAAAAAi/transparent-love.gif">
+  <button onclick="finalQuestion()">One last thing…</button>
+</div>
+
+<div class="container hidden" id="scene3">
+  <h1>Bhakti 🌹</h1>
+  <p>
+    Will you accept this rose<br>
+    and be my Valentine? 💖
+  </p>
+  <button onclick="yesAnswer()">Yes 🌹</button>
+  <button class="secondary" onclick="thinkAnswer()">Maybe 💭</button>
+</div>
+
+<audio id="bgMusic" src="bg.mp3" loop></audio>
+
+<script>
+let musicStarted=false;
+
+function startMusic(){
+  if(!musicStarted){
+    document.getElementById("bgMusic").play();
+    musicStarted=true;
+  }
+}
+
+function openLetter(){
+  startMusic();
+  document.getElementById("scene1").classList.add("hidden");
+  document.getElementById("scene2").classList.remove("hidden");
+}
+
+function finalQuestion(){
+  document.getElementById("scene2").classList.add("hidden");
+  document.getElementById("scene3").classList.remove("hidden");
+}
+
+function yesAnswer(){
+  document.getElementById("scene3").innerHTML=`
+    <h1>Thank you 💖</h1>
+    <p>
+      You just made this Rose Day<br>
+      truly unforgettable 🌹
+    </p>
+    <img id="rose" src="https://media.tenor.com/cuKLh1gaUCAAAAAi/transparent-love.gif">
+  `;
+  startConfetti();
+}
+
+function thinkAnswer(){
+  alert("Take your time 😊\nThis rose will wait for you 🌹");
+}
+
+function startConfetti(){
+  for(let i=0;i<60;i++){
+    let c=document.createElement("div");
+    c.className="confetti";
+    c.style.left=Math.random()*100+"vw";
+    c.style.background=["#ff4d6d","#ffc8dd","#ffd166"][Math.floor(Math.random()*3)];
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),3000);
+  }
+}
+</script>
+
+</body>
+</html>
